@@ -113,10 +113,11 @@ body::after {
   border-bottom:1px solid var(--border);
 }
 .rubric-grid {
-  display:grid; grid-template-columns:repeat(6,1fr); gap:10px;
+  display:grid; grid-template-columns:repeat(8,1fr); gap:10px;
 }
-@media(max-width:900px) { .rubric-grid { grid-template-columns:repeat(3,1fr); } }
-@media(max-width:480px) { .rubric-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:1100px) { .rubric-grid { grid-template-columns:repeat(4,1fr); } }
+@media(max-width:700px) { .rubric-grid { grid-template-columns:repeat(2,1fr); } }
+
 .rubric-card {
   background:var(--card2); border:1px solid var(--border);
   border-radius:10px; padding:14px 12px; text-align:center;
@@ -131,6 +132,8 @@ body::after {
 .rub-top3::before { background:var(--blue); }
 .rub-bot3::before { background:var(--orange); }
 .rub-elim::before { background:var(--red); }
+.rub-qf-fav::before { background:linear-gradient(90deg,#38d0a0,#20a870); }
+.rub-qf-least::before { background:linear-gradient(90deg,#c06820,#e08828); }
 .rubric-pts {
   font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1;
   display:block; margin-bottom:4px;
@@ -141,6 +144,8 @@ body::after {
 .rub-top3 .rubric-pts { color:var(--blue); }
 .rub-bot3 .rubric-pts { color:var(--orange); }
 .rub-elim .rubric-pts { color:var(--red); }
+.rub-qf-fav .rubric-pts { color:#38d0a0; }
+.rub-qf-least .rubric-pts { color:#e09040; }
 .rubric-label {
   font-family:'Barlow Condensed',sans-serif; font-weight:700;
   font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
@@ -179,7 +184,7 @@ body::after {
   font-family:'Barlow Condensed',sans-serif; font-weight:800;
   font-size:18px; letter-spacing:.5px; color:var(--white);
 }
-.lb-owner { font-size:11px; color:var(--muted); margin-top:1px; }
+.lb-owner { font-size:11px; color:#8898b4; margin-top:1px; }
 .lb-chefs { display:flex; gap:4px; flex-wrap:wrap; }
 .lb-chef-chip {
   font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:600;
@@ -196,14 +201,13 @@ body::after {
 .lb-score.zero { color:var(--dim); }
 .lb-score.neg { color:var(--red); }
 .lb-delta { font-size:11px; color:var(--muted); text-align:right; margin-top:1px; }
-.prize-badge {
-  font-family:'Barlow Condensed',sans-serif; font-size:9px; font-weight:800;
-  letter-spacing:1.5px; padding:2px 8px; border-radius:3px;
-  display:inline-block; margin-left:8px; vertical-align:middle;
+.lb-prize-amt {
+  font-family:'Bebas Neue',sans-serif; font-size:22px; line-height:1;
+  display:inline-block; margin-left:10px; vertical-align:middle;
 }
-.prize-1 { background:rgba(212,168,32,.15); color:var(--gold); border:1px solid rgba(212,168,32,.3); }
-.prize-2 { background:rgba(160,175,196,.1); color:var(--silver); border:1px solid rgba(160,175,196,.25); }
-.prize-3 { background:rgba(192,120,56,.12); color:var(--bronze); border:1px solid rgba(192,120,56,.3); }
+.prize-1 { color:var(--gold); }
+.prize-2 { color:var(--silver); }
+.prize-3 { color:var(--bronze); }
 
 /* ── TEAMS GRID ── */
 .teams-section { margin:36px 0 0; }
@@ -236,7 +240,7 @@ body::after {
 }
 .team-owner-lbl {
   font-family:'Barlow Condensed',sans-serif; font-size:11px;
-  letter-spacing:2px; color:var(--muted); margin-top:2px;
+  letter-spacing:2px; color:#8898b4; margin-top:2px;
 }
 .team-name-input, .team-owner-input {
   background:transparent; border:none; outline:none;
@@ -280,7 +284,7 @@ body::after {
 .chef-row.eliminated .chef-name-cell { opacity:.55; }
 .chef-cell-name {
   display:flex; align-items:center; gap:8px;
-  padding:8px 6px 8px 14px;
+  padding:8px 6px 8px 14px; min-width:130px;
 }
 .chef-thumb {
   width:32px; height:32px; border-radius:50%;
@@ -295,7 +299,7 @@ body::after {
 }
 .chef-info-name {
   font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:14px; letter-spacing:.3px; color:var(--white);
+  font-size:13px; letter-spacing:.2px; color:var(--white);
   white-space:nowrap;
 }
 .chef-info-sub { font-size:10px; color:var(--muted); }
@@ -311,7 +315,7 @@ body::after {
 .chef-name-input {
   background:transparent; border:none; outline:none;
   font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:14px; color:var(--white); width:100%; cursor:default;
+  font-size:12px; color:var(--white); width:100%; cursor:default;
 }
 .edit-mode .chef-name-input {
   background:#0d1628; border:1px solid var(--border2);
@@ -593,6 +597,16 @@ body::after {
       <div class="rubric-label">Eliminated</div>
       <div class="rubric-desc">Sent home; all future eps zeroed</div>
     </div>
+    <div class="rubric-card rub-qf-fav">
+      <span class="rubric-pts">+1</span>
+      <div class="rubric-label">QF: Favorite Dish</div>
+      <div class="rubric-desc">Named a favorite in quickfire</div>
+    </div>
+    <div class="rubric-card rub-qf-least">
+      <span class="rubric-pts">−1</span>
+      <div class="rubric-label">QF: Least Favorite</div>
+      <div class="rubric-desc">Named least favorite in quickfire</div>
+    </div>
   </div>
   <div class="finale-bonus-section">
     <div class="finale-bonus-label">Season Finale Bonuses</div>
@@ -757,7 +771,11 @@ const DEFAULT_TEAMS = [
     ]},
   { id:"remy_touille", name:"Remy-touille", owner:"Jeff & Kellye",
     chefs:[
-      {key:"",name:""},{key:"",name:""},{key:"",name:""},{key:"",name:""},{key:"",name:""},
+      {key:"oscar_diaz",     name:"Oscar Diaz"},
+      {key:"justin_tootla",  name:"Justin Tootla"},
+      {key:"sherry_cardoso", name:"Sherry Cardoso"},
+      {key:"sieger_bayer",   name:"Sieger Bayer"},
+      {key:"jennifer_jackson",name:"Jennifer Jackson"},
     ]},
 ];
 
@@ -923,7 +941,7 @@ function renderLeaderboard() {
   })).sort((a,b)=>b.total-a.total);
 
   const medals = ['🥇','🥈','🥉'];
-  const prizes = ['$180','$60','$20'];
+  const prizes = ['$160','$60','$20'];
   const prizeClass = ['prize-1','prize-2','prize-3'];
 
   const tbody = document.getElementById('leaderboardBody');
@@ -931,7 +949,7 @@ function renderLeaderboard() {
     const rank = i+1;
     const rankCls = rank<=3 ? `rank-${rank}` : 'rank-other';
     const medal = i<3 ? medals[i] : '';
-    const prizeBadge = i<3 ? `<span class="prize-badge ${prizeClass[i]}">${prizes[i]}</span>` : '';
+    const prizeBadge = i<3 ? `<span class="lb-prize-amt ${prizeClass[i]}">${prizes[i]}</span>` : '';
     const chefChips = DEFAULT_TEAMS.find(t=>t.id===row.id).chefs.map((c,ci)=>{
       const cs = state[row.id][ci];
       const nm = cs.chefName || c.name || '?';
@@ -1038,7 +1056,7 @@ function renderTeams() {
           <div class="team-owner-lbl">
             <input type="text" id="towner_${team.id}" class="team-owner-input"
               value="${team.owner}" readonly placeholder="Owner…"
-              style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--muted);"
+              style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:#8898b4;"
               onchange="DEFAULT_TEAMS.find(t=>t.id==='${team.id}').owner=this.value;">
           </div>
         </div>
